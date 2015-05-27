@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_margin="0dp"
+    android:background="@drawable/quiz"
+    android:orientation="vertical" >
+
+    <!--
+                	<TextView
+				android:text="EXIT"
+				android:id="@+id/exit"
+				style="@style/SystemFont" />
+    -->
+
+    <TextView
+        android:id="@+id/exit"
+        style="@style/MenuFont2"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:clickable="true"
+        android:textSize="45sp"
+        android:background="@drawable/menu_shape"
+        android:onClick="onClick"
+        android:text="@string/exit"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/about"
+        style="@style/MenuFont2"
+        android:layout_above="@+id/exit"
+        android:layout_alignRight="@+id/exit"
+        android:layout_marginEnd="5dp"
+        android:textSize="45sp"
+		android:background="@drawable/menu_shape"
+        android:layout_marginRight="5dp"
+        android:clickable="true"
+        android:text="@string/about"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/settings"
+        style="@style/MenuFont2"
+        android:layout_above="@+id/about"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:textSize="45sp"
+        android:background="@drawable/menu_shape"
+        android:clickable="true"
+        android:onClick="onClick"
+        android:text="@string/settings"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/start"
+        style="@style/MenuFont2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/settings"
+        android:textSize="45sp"
+   		android:background="@drawable/menu_shape"     
+        android:layout_alignParentLeft="true"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:clickable="true"
+        android:onClick="onClick"
+        android:text="@string/start"
+        android:textStyle="bold" />
+
+</RelativeLayout><!-- </RelativeLayout> -->

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Brain-Games</string>
+    <string name="action_settings">Settings</string>
+    <string name="start">START GAME</string>
+    <string name="about">ABOUT</string>
+    <string name="quick">QUICK GAME</string>
+    <string name="settings">SETTINGS</string>
+    <string name="exit">EXIT GAME</string>
+    <string name="title_activity_game">GameActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="music_set">Music:</string>
+    <string name="username_set">Username</string>
+    <string name="diff_set">Difficulty</string>
+    <string name="title_activity_about">AboutActivity</string>
+
+</resources>
