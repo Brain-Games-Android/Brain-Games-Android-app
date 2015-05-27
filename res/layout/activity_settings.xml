@@ -1,0 +1,106 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/quiz">
+
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/settings_shape"
+        android:orientation="vertical"
+        android:padding="10dp" >
+
+        <TableRow >
+	    
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/username_set"
+        android:textSize="22sp"
+        android:textColor="#FFE87C"
+         />
+
+
+    <EditText
+        android:id="@+id/editText1"
+        android:paddingRight="10dp"
+         android:paddingEnd="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="user"
+        android:textSize="22sp"
+        android:textColor="#FFE87C" />
+    
+    </TableRow>
+	<TableRow>
+	    
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/button2"
+        android:text="@string/music_set"
+        android:textSize="22sp"
+        android:textColor="#FFE87C" />
+
+
+    <CheckBox
+        android:id="@+id/checkBox1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CheckBox"
+        android:textSize="22sp"
+        android:textColor="#FFE87C" />
+    
+    </TableRow>
+    
+	<TableRow>
+	    
+    <TextView
+        android:id="@+id/textView132"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/button2"
+        android:text="@string/diff_set"
+        android:textSize="22sp"
+        android:textColor="#FFE87C" />
+
+
+    <Spinner
+      android:id="@+id/spinner"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"/>"
+    
+    </TableRow>
+	
+    <TableRow android:paddingTop="10sp">
+
+        <Button
+            android:id="@+id/btnFb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:background="@drawable/settings_shape"
+            android:text="Cancel"
+            android:textColor="#FFE87C" />
+
+        <Button
+            android:id="@+id/btnTwitter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:background="@drawable/settings_shape"
+            android:text="OK"
+            android:textColor="#FFE87C" />
+        </TableRow>
+    </TableLayout>
+
+</RelativeLayout>
