@@ -151,24 +151,25 @@ public class MenuActivity extends Activity implements ServiceConnection {
     {
         super.onStart ();
         Toast.makeText (this, "On Start", Toast.LENGTH_LONG).show ();
-       // mServ.;
-        //doBindService(); //music
-		//Intent music = new Intent();
-		//music.setClass(this,MusicService.class);
-		//startService(music);
-        //mServ.start();
-        
-       // Intent objIntent = new Intent(this, MusicService.class);
-		//startService(objIntent);
-        
+        if (mServ!=null)mServ.start();
+    }
+	
+	@Override
+	protected void onStop ()
+    {
+        super.onStop ();
+        Toast.makeText (this, "On Start", Toast.LENGTH_LONG).show ();
+        mServ.pause();
     }
 	
 	@Override
 	protected void onDestroy ()
     {
-        super.onStop ();
+        super.onDestroy ();
         Toast.makeText (this, "On destroy", Toast.LENGTH_LONG).show ();
         //mServ.stopMusic();
+        
+        //mServ.pause();
         
         //UNBIND THE SERVICE
         doUnbindService();

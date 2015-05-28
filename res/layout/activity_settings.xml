@@ -20,7 +20,7 @@
         <TableRow >
 	    
     <TextView
-        android:id="@+id/textView15"
+        android:id="@+id/unTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/username_set"
@@ -30,7 +30,7 @@
 
 
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/unEditText"
         android:paddingRight="10dp"
          android:paddingEnd="10dp"
         android:layout_width="wrap_content"
@@ -53,7 +53,7 @@
 
 
     <CheckBox
-        android:id="@+id/checkBox1"
+        android:id="@+id/checkMusic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="CheckBox"
@@ -84,7 +84,7 @@
     <TableRow android:paddingTop="10sp">
 
         <Button
-            android:id="@+id/btnFb"
+            android:id="@+id/btncancel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
@@ -93,7 +93,7 @@
             android:textColor="#FFE87C" />
 
         <Button
-            android:id="@+id/btnTwitter"
+            android:id="@+id/btnok"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
