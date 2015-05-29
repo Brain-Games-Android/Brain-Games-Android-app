@@ -119,7 +119,7 @@ public class SettingsActivity extends Activity implements OnClickListener {
     	//8a mporousa na exw bool to music sth bash kai na to pernaw kateu8eian anti gia if
     	//alla den hksera ti paizei me ta bool kai bariomoun na to koitaksw htan prwi
     	if(music==1) checkmusic.setChecked(true);
-    	else if(music==0) checkmusic.setChecked(true);
+    	else if(music==0) checkmusic.setChecked(false);
     	else Log.e("MyActivity","oti nanai");
     	Log.e("MyActivity","update name "+username.getText().toString());//+diff+" =a= "+music);
     	
