@@ -40,6 +40,56 @@
         android:textColor="#FFE87C" />
     
     </TableRow>
+    
+    <TableRow >
+	    
+    <TextView
+        android:id="@+id/fnTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fn_set"
+        android:textSize="22sp"
+        android:textColor="#FFE87C"
+         />
+
+
+    <EditText
+        android:id="@+id/fnEditText"
+        android:paddingRight="10dp"
+         android:paddingEnd="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="fn"
+        android:textSize="22sp"
+        android:textColor="#FFE87C" />
+    
+    </TableRow>
+    
+    <TableRow >
+	    
+    <TextView
+        android:id="@+id/lnTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ln_set"
+        android:textSize="22sp"
+        android:textColor="#FFE87C"
+         />
+
+
+    <EditText
+        android:id="@+id/lnEditText"
+        android:paddingRight="10dp"
+         android:paddingEnd="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ln"
+        android:textSize="22sp"
+        android:textColor="#FFE87C" />
+    
+    </TableRow>
+        
+        
 	<TableRow>
 	    
     <TextView
@@ -76,6 +126,25 @@
 
     <Spinner
       android:id="@+id/spinner"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"/>"
+    
+    </TableRow>
+    
+	<TableRow>
+	    
+    <TextView
+        android:id="@+id/textView133"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/button2"
+        android:text="@string/categ_set"
+        android:textSize="22sp"
+        android:textColor="#FFE87C" />
+
+
+    <Spinner
+      android:id="@+id/spinner2"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"/>"
     

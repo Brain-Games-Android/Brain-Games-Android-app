@@ -1,11 +1,29 @@
 package cs.boys.quizy_app;
 
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
+
+import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.content.ContentValues;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -24,7 +42,9 @@ import android.widget.CheckBox;
 public class SettingsActivity extends Activity implements OnClickListener {
 
 	private Spinner spinner;
-    private static final String[]paths = {"Easy", "Medium", "Hard", "YOLO"};
+    //private static /*final*/ String[]paths;// = {"Easy", "Medium", "Hard", "YOLO"};
+    private Spinner spinner2;
+    //private static /*final*/ String[]paths2;// = {"football", "cs", "kati", "oxi"};
     Button ok,cancel;
 
 	
@@ -32,54 +52,23 @@ public class SettingsActivity extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
-		spinner = (Spinner)findViewById(R.id.spinner);
-        ArrayAdapter<String>adapter = new ArrayAdapter<String>(SettingsActivity.this,
-                android.R.layout.simple_spinner_item,paths);
+		
+		
+		//("http://85.74.105.202:8080/BrainGames/webresources/post_sub_diff");
+		//("http://192.168.1.3:8080/BrainGames/webresources/post_sub_diff");
+		//("http://localhost:8989/BrainGames/webresources/post_sub_diff");
+		String serverURL = "http://192.168.1.2:8989/BrainGames/webresources/post_sub_diff";
+        
+        // Use AsyncTask execute Method To Prevent ANR Problem
+        new LongOperation().execute(serverURL);
 
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(new OnItemSelectedListener(){
-        	
-        	 public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
-
-        	        switch (position) {
-        	            case 0:
-        	                // Whatever you want to happen when the first item gets selected
-        	                break;
-        	            case 1:
-        	                // Whatever you want to happen when the second item gets selected
-        	                break;
-        	            case 2:
-        	                // Whatever you want to happen when the thrid item gets selected
-        	                break;
-
-        	        }
-        	    }
-        	 public void onNothingSelected(AdapterView<?> parent) {
-                 // Do nothing, just another required interface callback
-             }
-        	
-        });
         
         ok=(Button)findViewById(R.id.btnok);
         cancel=(Button)findViewById(R.id.btncancel);
         ok.setOnClickListener(this);
         cancel.setOnClickListener(this);
         
-        SQLiteDatabase db=openOrCreateDatabase("SettingsDB", Context.MODE_PRIVATE, null);
-        db.execSQL("CREATE TABLE IF NOT EXISTS settings(id int primary key, username VARCHAR,diff int,music int);");
-        String sqlString = "SELECT count(*) FROM settings  where id=1";
-        Cursor mcursor = db.rawQuery(sqlString, null);
-        mcursor.moveToFirst();
-        int icount = mcursor.getInt(0);
-        if(icount>0){
-        	loadPrevious(db);
-        }
-        else{
-        	//populate table
-        	//default values :P
-        	Log.e("MyActivity","yolo");
-        }
+        
 
     }
 
@@ -110,12 +99,20 @@ public class SettingsActivity extends Activity implements OnClickListener {
         Cursor mcursor = db.rawQuery(sqlString, null);
         mcursor.moveToFirst();
         String un = mcursor.getString(1);
-        int diff=mcursor.getInt(2);
-        int music=mcursor.getInt(3);
+        String fn = mcursor.getString(2);
+        String ln = mcursor.getString(3);
+        int diff=mcursor.getInt(4);
+        int categ=mcursor.getInt(5);
+        int music=mcursor.getInt(6);
     	spinner.setSelection(diff);
+    	spinner2.setSelection(categ);
     	EditText username = (EditText)findViewById(R.id.unEditText);
+    	EditText fname = (EditText)findViewById(R.id.fnEditText);
+    	EditText lname = (EditText)findViewById(R.id.lnEditText);
     	CheckBox checkmusic = (CheckBox)findViewById(R.id.checkMusic);
     	username.setText(un);
+    	fname.setText(fn);
+    	lname.setText(ln);
     	//8a mporousa na exw bool to music sth bash kai na to pernaw kateu8eian anti gia if
     	//alla den hksera ti paizei me ta bool kai bariomoun na to koitaksw htan prwi
     	if(music==1) checkmusic.setChecked(true);
@@ -131,6 +128,8 @@ public class SettingsActivity extends Activity implements OnClickListener {
 		SQLiteDatabase db=openOrCreateDatabase("SettingsDB", Context.MODE_PRIVATE, null);
 		
 		EditText username = (EditText)findViewById(R.id.unEditText);
+		EditText fn = (EditText)findViewById(R.id.fnEditText);
+		EditText ln = (EditText)findViewById(R.id.lnEditText);
     	CheckBox checkmusic = (CheckBox)findViewById(R.id.checkMusic);
 		
 		String sqlString = "SELECT count(*) FROM settings";
@@ -145,10 +144,13 @@ public class SettingsActivity extends Activity implements OnClickListener {
 			ContentValues cv = new ContentValues();
 			
 			cv.put("username",username.getText().toString()); //These Fields should be your String values of actual column names
+			cv.put("fn",fn.getText().toString()); //These Fields should be your String values of actual column names
+			cv.put("ln",ln.getText().toString()); //These Fields should be your String values of actual column names
 			cv.put("diff", spinner.getSelectedItemPosition());
+			cv.put("categ", spinner2.getSelectedItemPosition());
 			
 			if(checkmusic.isChecked()==true) cv.put("music",1);
-			else cv.put("music",1);
+			else cv.put("music",0);
 			
 			db.update("settings", cv, "id "+"="+1, null);
         }
@@ -157,10 +159,12 @@ public class SettingsActivity extends Activity implements OnClickListener {
 			if(checkmusic.isChecked()==true) music=1;
 			else music=0;  	
         	
+			//username.setText(fn.getText().toString());
         	String sql ="INSERT or replace INTO settings " +//"INSERT or replace INTO settings " +
-        			"(id, username, diff, music) " +
-        			"VALUES(1,'"+username.getText().toString()+ "'," +spinner.getSelectedItemPosition()+","+music+")";       
+        			"(id, username,fn,ln, diff,categ, music) " +
+        			"VALUES(1,'"+username.getText().toString()+ "','" +fn.getText().toString() + "','" +ln.getText().toString() + "'," + spinner.getSelectedItemPosition()+ "," + spinner2.getSelectedItemPosition() +","+music+")";       
             db.execSQL(sql);
+            //Log.e("insert","VALUES(1,'"+username.getText().toString()+ "','" +fn.getText().toString() + "'," +ln.getText().toString() + "'," + spinner.getSelectedItemPosition()+ "," + spinner2.getSelectedItemPosition() +","+music+")");	
         }
 		
 	}
@@ -181,5 +185,158 @@ public class SettingsActivity extends Activity implements OnClickListener {
 				break;
 		}
 	}
+	
+	
+	
+	
+
+	// Class with extends AsyncTask class
+    
+    private class LongOperation  extends AsyncTask<String, Void, Void> {
+          
+        // Required initialization
+         
+       // private final HttpClient Client = new DefaultHttpClient();
+        private String Content;
+        private String Error = null;
+        private ProgressDialog Dialog = new ProgressDialog(SettingsActivity.this);
+        //String data =""; 
+        TextView uiUpdate = (TextView) findViewById(R.id.unTextView);
+       // TextView jsonParsed = (TextView) findViewById(R.id.fnTextView);
+       // int sizeData = 0;  
+      //  EditText serverText = (EditText) findViewById(R.id.lnEditText);
+         
+         
+        protected void onPreExecute() {
+            // NOTE: You can call UI Element here.
+              
+            //Start Progress Dialog (Message)
+            
+            Dialog.setMessage("Please wait..");
+            Dialog.show();
+              
+             
+        }
+  
+        // Call after onPreExecute method
+        protected Void doInBackground(String... urls) {
+             
+            ///************ Make Post Call To Web Server **********
+            BufferedReader reader=null;
+    
+                 // Send data 
+                try
+                { 
+                   
+                   // Defined URL  where to send data
+                   URL url = new URL(urls[0]);
+                      
+                  // Send POST data request
+        
+                  URLConnection conn = url.openConnection(); 
+
+               
+                  // Get the server response 
+                    
+                  reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                  StringBuilder sb = new StringBuilder();
+                  String line = null;
+                 
+                    // Read Server Response
+                    while((line = reader.readLine()) != null)
+                        {
+                               // Append server response in string
+                               sb.append(line + " ");
+                        }
+                     
+                    // Append Server Response To Content String 
+                   Content = sb.toString();
+                }
+                catch(Exception ex)
+                {
+                    Error = ex.getMessage();
+                }
+                finally
+                {
+                    try
+                    {
+          
+                        reader.close();
+                    }
+        
+                    catch(Exception ex) {}
+                }
+             
+          //  /****************************************************
+            return null;
+        }
+          
+        protected void onPostExecute(Void unused) {
+            // NOTE: You can call UI Element here.
+              
+            // Close progress dialog 
+            Dialog.dismiss();
+              
+            if (Error != null) {
+                  
+                uiUpdate.setText("Output : "+Error);
+                  
+            } else {
+               
+                // Show Response Json On Screen (activity)
+            	Log.e("WS", Content);
+                //uiUpdate.setText( Content );
+        		String split_em[]=Content.split("##");
+        		String paths[]=split_em[0].split("#");//get diff's
+        		String paths2[]=split_em[1].split("#");//get categ's
+        		
+        		for(int i=0;i<paths.length;i++)
+        			paths[i].replaceAll("\"", "");
+        		for(int i=0;i<paths2.length;i++)
+        			paths2[i].replaceAll("\"", "");
+        		
+        		spinner = (Spinner)findViewById(R.id.spinner);
+                ArrayAdapter<String>adapter = new ArrayAdapter<String>(SettingsActivity.this,
+                        android.R.layout.simple_spinner_item,paths);
+
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner.setAdapter(adapter);
+                
+                spinner2 = (Spinner)findViewById(R.id.spinner2);
+                ArrayAdapter<String>adapter2 = new ArrayAdapter<String>(SettingsActivity.this,
+                        android.R.layout.simple_spinner_item,paths2);
+
+                adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner2.setAdapter(adapter2);
+
+                
+                SQLiteDatabase db=openOrCreateDatabase("SettingsDB", Context.MODE_PRIVATE, null);
+                //   db.execSQL("drop TABLE settings IF EXISTS;");
+                   db.execSQL("CREATE TABLE IF NOT EXISTS settings(id int primary key, username VARCHAR,fn VARCHAR,ln VARCHAR,diff int,categ int,music int);");
+                   String sqlString = "SELECT count(*) FROM settings  where id=1";
+                   Cursor mcursor = db.rawQuery(sqlString, null);
+                   mcursor.moveToFirst();
+                   int icount = mcursor.getInt(0);
+                   if(icount>0){
+                   	loadPrevious(db);
+                   }
+                   else{
+                   	//populate table
+                   	//default values :P
+                   	Log.e("MyActivity","yolo");
+                   }
+
+   
+                  
+             }
+        }
+          
+    }
+	
+
+
+
 		
 }
+
+
