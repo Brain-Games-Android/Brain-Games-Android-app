@@ -13,7 +13,10 @@
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="music_set">Music:</string>
     <string name="username_set">Username</string>
+    <string name="fn_set">First name</string>
+    <string name="ln_set">Last name</string>
     <string name="diff_set">Difficulty</string>
+    <string name="categ_set">Category</string>
     <string name="title_activity_about">AboutActivity</string>
 
 </resources>
