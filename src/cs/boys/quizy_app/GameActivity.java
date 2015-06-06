@@ -1,5 +1,6 @@
 package cs.boys.quizy_app;
 
+import android.R.integer;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
@@ -10,20 +11,36 @@ import android.os.IBinder;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.TextureView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 import cs.boys.quizy_app.MusicService;
 
 
 
-public class GameActivity extends Activity implements  OnClickListener{//, ServiceConnection {
-
-	Button ansA ;
-	Button ansB ;
-	Button ansC ;
-	Button ansD ;
+public class GameActivity extends Activity {//, ServiceConnection {
+	
+	private RadioGroup rGChoices;
+	private TextView tVQuestion;
+	private TextView tVChoice0;
+	private TextView tVChoice1;
+	private TextView tVChoice2;
+	private TextView tVChoice3;
+	
+	
+	
+	
+	private String questionString = "Question?";
+	private String choice0 = "Choose.";
+	private String choice1 = "Choose... really.";
+	private String choice2 = "...";
+	private String choice3 = "LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOONG";
+	
+	
 	// indicates whether the activity is linked to service player.
 	//private boolean mIsBound = false;
 	
@@ -42,18 +59,44 @@ public class GameActivity extends Activity implements  OnClickListener{//, Servi
 			//	Intent music = new Intent(this, MusicService.class);
 				//startService(music);
 				//doBindService();
+		rGChoices = (RadioGroup) findViewById(R.id.rg_choices);
+		tVQuestion = (TextView) findViewById(R.id.question);
+		tVChoice0 = (TextView) findViewById(R.id.rb_choice0);
+		tVChoice1 = (TextView) findViewById(R.id.rb_choice1);
+		tVChoice2 = (TextView) findViewById(R.id.rb_choice2);
+		tVChoice3 = (TextView) findViewById(R.id.rb_choice3);
 		
-		 ansA = (Button) findViewById(R.id.buttonA);
-		 ansB = (Button) findViewById(R.id.buttonB);
-		 ansC = (Button) findViewById(R.id.buttonC);
-		 ansD = (Button) findViewById(R.id.buttonD);
+		// !!!
+		setQuestion();		
+	}
+	
+	private void setQuestion() {
+		tVQuestion.setText(questionString);
 		
-		//START LISTENER
-		ansA.setOnClickListener(this);
-		ansB.setOnClickListener(this);
-		ansC.setOnClickListener(this);
-		ansD.setOnClickListener(this);
+		tVChoice0.setText(choice0);
+		tVChoice1.setText(choice1);
+		tVChoice2.setText(choice2);
+		tVChoice3.setText(choice3);
+	}
+	
+	
+	
+	private boolean checkChoice() {
+		Integer selected = rGChoices.getCheckedRadioButtonId();
 		
+		if (selected < 0) {
+			return false;
+		}
+		else {
+			// increment a counter so we set the fields with the 
+			// new texts. Plus, keep the score. Probably in a shared
+			// preference. and if it's the end the jump to another 
+			// activity that sends the shared preference and that
+			// activity sends the data to the server and awaits 
+			// the results from the server.
+			
+			return true;
+		}
 	}
 
 	@Override
@@ -75,44 +118,6 @@ public class GameActivity extends Activity implements  OnClickListener{//, Servi
 		return super.onOptionsItemSelected(item);
 	}
 	
-	public void onClick(View v) {
-		
-		//GIA NA FUGOUN TA WARNINGS 8ELEI 
-		//setBackground ANTI GIA setBackgroundDrawable ALLA 8ELEI API16 KAI PANW
-		//KAI EXOUME MIN TO 15
-		Button tmp;
-		switch (v.getId())
-		{
-			case R.id.buttonA:
-				//tmp=(Button)v; //yolo mode
-				v.setBackgroundDrawable(getResources().getDrawable(R.drawable.btncorrect));
-        		Toast toast = Toast.makeText(getApplicationContext(), "correct clicked", Toast.LENGTH_LONG);
-        		toast.setGravity(Gravity.CENTER, 0, 0);
-        		toast.show();
-				break;
-				
-			case R.id.buttonB:
-				ansA = (Button) findViewById(R.id.buttonA);
-				ansA.setBackgroundDrawable(getResources().getDrawable(R.drawable.btncorrect));
-				//tmp=(Button)v; //yolo mode
-				v.setBackgroundDrawable(getResources().getDrawable(R.drawable.btnwrong));
-				break;
-				
-			case R.id.buttonC:
-				ansA = (Button) findViewById(R.id.buttonA);
-				ansA.setBackgroundDrawable(getResources().getDrawable(R.drawable.btncorrect));
-				//tmp=(Button)v; //yolo mode
-				v.setBackgroundDrawable(getResources().getDrawable(R.drawable.btnwrong));				
-				break;
-				
-			case R.id.buttonD:
-				ansA = (Button) findViewById(R.id.buttonA);
-				ansA.setBackgroundDrawable(getResources().getDrawable(R.drawable.btncorrect));
-				//tmp=(Button)v; //yolo mode
-				v.setBackgroundDrawable(getResources().getDrawable(R.drawable.btnwrong));				
-				break;
-		}
-	}
     
 	
 	@Override
