@@ -18,5 +18,5 @@
     <string name="diff_set">Difficulty</string>
     <string name="categ_set">Category</string>
     <string name="title_activity_about">AboutActivity</string>
-
+	<string name="next">Next</string>
 </resources>
