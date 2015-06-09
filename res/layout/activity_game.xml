@@ -1,162 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout 
-    xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical" 
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent" 
-	android:gravity="center_horizontal">
 
-	<!-- 
-	<LinearLayout 
-	    android:orientation="horizontal"
-		android:layout_width="fill_parent" 
-		android:layout_height="wrap_content"
-		android:paddingTop="5dip" 
-		android:paddingBottom="5dip"
-		android:gravity="center_horizontal"> -->
-
-		<RadioGroup 
-		    android:layout_width="fill_parent"
-			android:layout_height="wrap_content" 
-			android:orientation="vertical"
-			android:id="@+id/rg_choices">
-			
-			<TextView android:layout_width="fill_parent"
-				android:layout_height="wrap_content" 
-				android:textColor="#000000"
-				android:textSize="25sp"
-				android:textStyle="bold" 
-				android:id="@+id/question"/>
-			
-			<RadioButton android:checked="false" android:id="@+id/rb_choice0" />
-			
-			<RadioButton android:checked="false" android:id="@+id/rb_choice1" />
-			
-			<RadioButton android:checked="false" android:id="@+id/rb_choice2" />
-			
-			<RadioButton android:checked="false" android:id="@+id/rb_choice3" />
-			
-		</RadioGroup>
-
-	<!--  </LinearLayout> -->
-	
-	
-
-	<LinearLayout 
-	    android:orientation="horizontal"
-		android:layout_width="fill_parent" 
-		android:layout_height="wrap_content"
-		android:paddingTop="5dip" 
-		android:paddingBottom="5dip"
-		android:gravity="center_horizontal">
-		
-		<Button
-            android:background="#2fcc71"
-		    android:id="@+id/nextBtn"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:text="@string/next"
-            android:layout_weight="1"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp" />
-
-	</LinearLayout>
-
-</LinearLayout>
-
-
-<!-- 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools"
           android:layout_width="match_parent"
           android:layout_height="match_parent"
-          android:orientation="vertical" >
+          android:orientation="vertical" 
+			android:background="@drawable/quiz">
 
-<TextView
-        android:id="@+id/domanda"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:alpha="0.8"
-        android:text="Who is the best TEI student?" />
+
 
 <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/textshape"
-        android:gravity="bottom"
-        android:shrinkColumns="*"
-        android:stretchColumns="*" >
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true"
+    android:layout_marginBottom="110dp"
+    android:background="@drawable/textshape"
+    android:gravity="bottom"
+    android:shrinkColumns="*"
+    android:stretchColumns="*" >
 
-    <TableRow
-            android:id="@+id/tableRow4"
-            android:layout_marginBottom="8dp" >
-
-        <Button
-                android:id="@+id/buttonA"
-                android:layout_height="match_parent"
-                android:layout_marginRight="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginTop="3dp"
-                android:alpha="0.6"
-                android:gravity="center"
-                android:text="Dinos"
-                android:textSize="13sp"
-                android:background="@drawable/buttonshape"/>
+    <TableRow android:layout_marginBottom="8dp" android:layout_marginTop="5dp" >
 
         <Button
-                android:id="@+id/buttonB"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="3dp"
-                android:alpha="0.6"
-                android:textSize="13sp"
-                android:text="John"
-                android:background="@drawable/buttonshape"
-                android:gravity="center"/>
+            android:id="@+id/buttonA"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="3dp"
+            android:background="@drawable/buttonshape"
+            android:gravity="center"
+            android:text="Dinos"
+            android:textSize="13sp" />
+
+        <Button
+            android:id="@+id/buttonB"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="3dp"
+            android:background="@drawable/buttonshape"
+            android:gravity="center"
+            android:text="John"
+            android:textSize="13sp" />
     </TableRow>
 
     <TableRow
-            android:id="@+id/tableRow3"
-            android:layout_height="match_parent" >
+        android:id="@+id/tableRow3"
+        android:layout_height="match_parent" >
 
         <Button
-                android:id="@+id/buttonC"
-                android:background="@drawable/buttonshape"
-                android:layout_height="match_parent"
-                android:layout_marginRight="5dp"
-                android:layout_marginEnd="5dp"
-                 android:layout_marginBottom="3dp"
-                android:alpha="0.6"
-                android:text="Paris"
-                android:gravity="center"
-                android:textSize="13sp"
-                 />
+            android:id="@+id/buttonC"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="3dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/buttonshape"
+            android:gravity="center"
+            android:text="Paris"
+            android:textSize="13sp" />
 
         <Button
-                android:id="@+id/buttonD"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:layout_marginStart="5dp"
-                 android:layout_marginBottom="3dp"
-                android:alpha="0.6"
-                android:background="@drawable/buttonshape"
-                android:text="Thanasis"
-                android:gravity="center"
-                android:textSize="13sp"
-                />
+            android:id="@+id/buttonD"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="3dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:background="@drawable/buttonshape"
+            android:gravity="center"
+            android:text="Thanasis"
+            android:textSize="13sp" />
     </TableRow>
+    <TableRow
+        android:layout_height="match_parent" >
+       <TextView />
+        </TableRow>
+    
+    <TableRow
+        android:layout_height="match_parent"
+        android:layout_marginBottom="3dp" >
+    
+    <Button
+            android:id="@+id/passButton"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="3dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/buttonshape2"
+            android:gravity="center"
+            android:text="PASS"
+            android:textSize="13sp" />
+
+	<Button
+            android:id="@+id/submitButton"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="3dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/buttonshape3"
+            android:gravity="center"
+            android:text="SUBMIT"
+            android:textSize="13sp" />
+</TableRow>
+    
 </TableLayout>
 
-<TextView
-        android:id="@+id/punteggio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-    />
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/punteggio"
+    android:layout_marginTop="24dp"
+    android:background="@drawable/textshape"
+    android:shrinkColumns="*"
+    android:minHeight="100dp"
+    android:stretchColumns="*" >
 
-</LinearLayout>
--->
+   
+        <TextView
+            android:id="@+id/question"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="7dp"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:layout_marginStart="7dp"
+            android:text="Who is the best TEI student?" />
+    
+</RelativeLayout>
+
+</RelativeLayout>

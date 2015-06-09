@@ -3,7 +3,7 @@
 
 		<shape xmlns:android="http://schemas.android.com/apk/res/android"
 				android:shape="rectangle" android:padding="10dp">
-		 	<solid android:color="#0000A0"/>
+		 	<solid android:color="#ccFF9933"/>
 		    	<corners
 		     	android:bottomRightRadius="5dp"
 		     	android:bottomLeftRadius="5dp"
@@ -18,9 +18,9 @@
 							android:color="#565051"
 							/>
 				  <gradient
-							android:centerColor="#659EC7"
-							android:startColor="#659EC7"
-							android:endColor="#659EC7"
+							android:centerColor="#FF9933"
+							android:startColor="#FF9933"
+							android:endColor="#FF9933"
 							/>
 				  <padding
 				      android:left="10dp"

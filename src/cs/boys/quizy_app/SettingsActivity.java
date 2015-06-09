@@ -57,7 +57,7 @@ public class SettingsActivity extends Activity implements OnClickListener {
 		//("http://85.74.105.202:8080/BrainGames/webresources/post_sub_diff");
 		//("http://192.168.1.3:8080/BrainGames/webresources/post_sub_diff");
 		//("http://localhost:8989/BrainGames/webresources/post_sub_diff");
-		String serverURL = "http://85.74.105.202:8080/BrainGames/webresources/post_sub_diff";
+		String serverURL = "http://192.168.1.3:8080/BrainGames/webresources/post_sub_diff";
         
         // Use AsyncTask execute Method To Prevent ANR Problem
         new LongOperation().execute(serverURL);
@@ -148,6 +148,8 @@ public class SettingsActivity extends Activity implements OnClickListener {
 			cv.put("ln",ln.getText().toString()); //These Fields should be your String values of actual column names
 			cv.put("diff", spinner.getSelectedItemPosition());
 			cv.put("categ", spinner2.getSelectedItemPosition());
+			cv.put("categ_name", spinner2.getSelectedItem().toString());
+			cv.put("diff_name", spinner.getSelectedItem().toString());
 			
 			if(checkmusic.isChecked()==true) cv.put("music",1);
 			else cv.put("music",0);
@@ -161,8 +163,8 @@ public class SettingsActivity extends Activity implements OnClickListener {
         	
 			//username.setText(fn.getText().toString());
         	String sql ="INSERT or replace INTO settings " +//"INSERT or replace INTO settings " +
-        			"(id, username,fn,ln, diff,categ, music) " +
-        			"VALUES(1,'"+username.getText().toString()+ "','" +fn.getText().toString() + "','" +ln.getText().toString() + "'," + spinner.getSelectedItemPosition()+ "," + spinner2.getSelectedItemPosition() +","+music+")";       
+        			"(id, username,fn,ln, diff,categ, music, categ_name,diff_name) " +
+        			"VALUES(1,'"+username.getText().toString()+ "','" +fn.getText().toString() + "','" +ln.getText().toString() + "'," + spinner.getSelectedItemPosition()+ "," + spinner2.getSelectedItemPosition() +","+music + ",'" + spinner.getSelectedItem().toString()+ "','" + spinner2.getSelectedItem().toString()+"')";       
             db.execSQL(sql);
             //Log.e("insert","VALUES(1,'"+username.getText().toString()+ "','" +fn.getText().toString() + "'," +ln.getText().toString() + "'," + spinner.getSelectedItemPosition()+ "," + spinner2.getSelectedItemPosition() +","+music+")");	
         }
@@ -291,9 +293,10 @@ public class SettingsActivity extends Activity implements OnClickListener {
         		String paths2[]=split_em[1].split("#");//get categ's
         		
         		for(int i=0;i<paths.length;i++)
-        			paths[i].replaceAll("\"", "");
+        			paths[i]=paths[i].replaceAll("\"", "");
+        		
         		for(int i=0;i<paths2.length;i++)
-        			paths2[i].replaceAll("\"", "");
+        			paths2[i]=paths2[i].replaceAll("\"", "");
         		
         		spinner = (Spinner)findViewById(R.id.spinner);
                 ArrayAdapter<String>adapter = new ArrayAdapter<String>(SettingsActivity.this,
@@ -312,7 +315,7 @@ public class SettingsActivity extends Activity implements OnClickListener {
                 
                 SQLiteDatabase db=openOrCreateDatabase("SettingsDB", Context.MODE_PRIVATE, null);
                 //   db.execSQL("drop TABLE settings IF EXISTS;");
-                   db.execSQL("CREATE TABLE IF NOT EXISTS settings(id int primary key, username VARCHAR,fn VARCHAR,ln VARCHAR,diff int,categ int,music int);");
+                   db.execSQL("CREATE TABLE IF NOT EXISTS settings(id int primary key, username VARCHAR,fn VARCHAR,ln VARCHAR,diff int,categ int,music int,  diff_name VARCHAR, categ_name VARCHAR);");
                    String sqlString = "SELECT count(*) FROM settings  where id=1";
                    Cursor mcursor = db.rawQuery(sqlString, null);
                    mcursor.moveToFirst();

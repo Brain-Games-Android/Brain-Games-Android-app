@@ -18,5 +18,6 @@
     <string name="diff_set">Difficulty</string>
     <string name="categ_set">Category</string>
     <string name="title_activity_about">AboutActivity</string>
-	<string name="next">Next</string>
+    <string name="title_activity_load_game">LoadGameActivity</string>
+
 </resources>

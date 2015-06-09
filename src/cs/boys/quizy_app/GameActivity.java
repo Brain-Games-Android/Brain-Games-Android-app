@@ -1,46 +1,40 @@
 package cs.boys.quizy_app;
 
-import android.R.integer;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.TextureView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import cs.boys.quizy_app.MusicService;
 
 
 
-public class GameActivity extends Activity {//, ServiceConnection {
+public class GameActivity extends Activity implements  OnClickListener{//, ServiceConnection {
+
+	Button ansA ;
+	Button ansB ;
+	Button ansC ;
+	Button ansD ;
 	
-	private RadioGroup rGChoices;
-	private TextView tVQuestion;
-	private TextView tVChoice0;
-	private TextView tVChoice1;
-	private TextView tVChoice2;
-	private TextView tVChoice3;
-	
-	
-	
-	
-	private String questionString = "Question?";
-	private String choice0 = "Choose.";
-	private String choice1 = "Choose... really.";
-	private String choice2 = "...";
-	private String choice3 = "LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOONG";
-	
-	
+	Integer question_id[]=new Integer[10];
+	String questions[]=new String[10];
+	String ans1[]=new String[10];
+	String ans2[]=new String[10];
+	String ans3[]=new String[10];
+	String ans4[]=new String[10];
 	// indicates whether the activity is linked to service player.
 	//private boolean mIsBound = false;
 	
@@ -59,44 +53,22 @@ public class GameActivity extends Activity {//, ServiceConnection {
 			//	Intent music = new Intent(this, MusicService.class);
 				//startService(music);
 				//doBindService();
-		rGChoices = (RadioGroup) findViewById(R.id.rg_choices);
-		tVQuestion = (TextView) findViewById(R.id.question);
-		tVChoice0 = (TextView) findViewById(R.id.rb_choice0);
-		tVChoice1 = (TextView) findViewById(R.id.rb_choice1);
-		tVChoice2 = (TextView) findViewById(R.id.rb_choice2);
-		tVChoice3 = (TextView) findViewById(R.id.rb_choice3);
 		
-		// !!!
-		setQuestion();		
-	}
-	
-	private void setQuestion() {
-		tVQuestion.setText(questionString);
+		 ansA = (Button) findViewById(R.id.buttonA);
+		 ansB = (Button) findViewById(R.id.buttonB);
+		 ansC = (Button) findViewById(R.id.buttonC);
+		 ansD = (Button) findViewById(R.id.buttonD);
 		
-		tVChoice0.setText(choice0);
-		tVChoice1.setText(choice1);
-		tVChoice2.setText(choice2);
-		tVChoice3.setText(choice3);
-	}
-	
-	
-	
-	private boolean checkChoice() {
-		Integer selected = rGChoices.getCheckedRadioButtonId();
+		//START LISTENER
+		ansA.setOnClickListener(this);
+		ansB.setOnClickListener(this);
+		ansC.setOnClickListener(this);
+		ansD.setOnClickListener(this);
 		
-		if (selected < 0) {
-			return false;
-		}
-		else {
-			// increment a counter so we set the fields with the 
-			// new texts. Plus, keep the score. Probably in a shared
-			// preference. and if it's the end the jump to another 
-			// activity that sends the shared preference and that
-			// activity sends the data to the server and awaits 
-			// the results from the server.
-			
-			return true;
-		}
+		load_questions();//first question
+		
+		show_question(0);
+		
 	}
 
 	@Override
@@ -104,6 +76,9 @@ public class GameActivity extends Activity {//, ServiceConnection {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.game, menu);
 		return true;
+		
+		
+		
 	}
 
 	@Override
@@ -118,6 +93,45 @@ public class GameActivity extends Activity {//, ServiceConnection {
 		return super.onOptionsItemSelected(item);
 	}
 	
+	public void onClick(View v) {
+		
+		//GIA NA FUGOUN TA WARNINGS 8ELEI 
+		//setBackground ANTI GIA setBackgroundDrawable ALLA 8ELEI API16 KAI PANW
+		//KAI EXOUME MIN TO 15
+		Button tmp;
+
+		switch (v.getId())
+		{
+			case R.id.buttonA:
+				//tmp=(Button)v; //yolo mode
+				v.setBackgroundDrawable(getResources().getDrawable(R.drawable.btncorrect));
+				ansB.setBackgroundDrawable(getResources().getDrawable(R.drawable.buttonshape));
+				ansC.setBackgroundDrawable(getResources().getDrawable(R.drawable.buttonshape));
+				ansD.setBackgroundDrawable(getResources().getDrawable(R.drawable.buttonshape));
+				
+				break;
+				
+			case R.id.buttonB:
+				v.setBackgroundDrawable(getResources().getDrawable(R.drawable.btncorrect));
+				ansA.setBackgroundDrawable(getResources().getDrawable(R.drawable.buttonshape));
+				ansC.setBackgroundDrawable(getResources().getDrawable(R.drawable.buttonshape));
+				ansD.setBackgroundDrawable(getResources().getDrawable(R.drawable.buttonshape));
+				break;
+			case R.id.buttonC:
+				v.setBackgroundDrawable(getResources().getDrawable(R.drawable.btncorrect));
+				ansB.setBackgroundDrawable(getResources().getDrawable(R.drawable.buttonshape));
+				ansA.setBackgroundDrawable(getResources().getDrawable(R.drawable.buttonshape));
+				ansD.setBackgroundDrawable(getResources().getDrawable(R.drawable.buttonshape));			
+				break;
+				
+			case R.id.buttonD:
+				v.setBackgroundDrawable(getResources().getDrawable(R.drawable.btncorrect));
+				ansB.setBackgroundDrawable(getResources().getDrawable(R.drawable.buttonshape));
+				ansC.setBackgroundDrawable(getResources().getDrawable(R.drawable.buttonshape));
+				ansA.setBackgroundDrawable(getResources().getDrawable(R.drawable.buttonshape));			
+				break;
+		}
+	}
     
 	
 	@Override
@@ -149,38 +163,35 @@ public class GameActivity extends Activity {//, ServiceConnection {
 
     }
 	
-	//WHEN SERVICE IS CONNECTED WE START THE MUSIC
-/*		public void onServiceConnected(ComponentName name, IBinder binder)
-		{
-			mServ = ((MusicService.ServiceBinder) binder).getService();
-			//START MUSIC
-			//mServ.start();
-		}
-		
-		public void onServiceDisconnected(ComponentName name)
-		{
-			mServ = null;
-		}
-		
-		// local methods used in connection/disconnection activity with service.
-		
-		public void doBindService()
-		{
-			// activity connects to the service.
-	 		Intent intent = new Intent(this, MusicService.class);
-			bindService(intent, this, Context.BIND_AUTO_CREATE);
-			mIsBound = true;
-		}
-		
-		public void doUnbindService()
-		{
-			// disconnects the service activity.
-			if(mIsBound)
-			{
-				unbindService(this);
-	      		mIsBound = false;
-			}
-		}
 
-8*/
+	
+	public void load_questions(){
+		SQLiteDatabase db=openOrCreateDatabase("QuestionsDB", Context.MODE_PRIVATE, null);
+		String sqlString = "SELECT * FROM questions";
+        Cursor mcursor = db.rawQuery(sqlString, null);
+        Log.e("check", "prin dw gia bash");
+        int i=0;
+	        while(mcursor.moveToNext()){
+		        question_id[i]= mcursor.getInt(0);
+		        questions[i] = mcursor.getString(1);
+		        ans1[i] = mcursor.getString(2);
+		        ans2[i] = mcursor.getString(3);
+		        ans3[i] = mcursor.getString(4);
+		        ans4[i] = mcursor.getString(5);
+		        i++;
+	        }
+	}
+	
+	public void show_question(int index){
+		TextView question=(TextView)findViewById(R.id.question);
+		ansA = (Button) findViewById(R.id.buttonA);
+		 ansB = (Button) findViewById(R.id.buttonB);
+		 ansC = (Button) findViewById(R.id.buttonC);
+		 ansD = (Button) findViewById(R.id.buttonD);
+		 question.setText(questions[index]);
+		 ansA.setText(ans1[index]);
+		 ansB.setText(ans2[index]);
+		 ansC.setText(ans3[index]);
+		 ansD.setText(ans4[index]);
+	}
 }

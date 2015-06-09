@@ -54,12 +54,8 @@ public class MenuActivity extends Activity implements ServiceConnection {
         		toast.show();
         		Intent Start;
         		//Bundle MyBundle;
-        		Start = new Intent (MenuActivity.this, GameActivity.class);
-        		//MyBundle = new Bundle();
-        		//MyBundle.putInt("SecondVal", N2);
-        		//MyBundle.putInt("FirstVal", N1);
-        		//MyBundle.putBoolean("ForResult", false);
-        		//NextAct.putExtras(MyBundle);
+        		//Start = new Intent (MenuActivity.this, GameActivity.class);
+        		Start = new Intent (MenuActivity.this, LoadGameActivity.class);
         		startActivity(Start);
         		//finish ();
         	}
