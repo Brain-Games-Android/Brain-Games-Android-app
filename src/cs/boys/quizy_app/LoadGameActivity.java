@@ -33,7 +33,7 @@ public class LoadGameActivity extends Activity {
 		//("http://85.74.105.202:8080/BrainGames/webresources/post_sub_diff");
 		//("http://192.168.1.3:8080/BrainGames/webresources/post_sub_diff");
 		//("http://localhost:8989/BrainGames/webresources/post_sub_diff");
-		String serverURL = "http://192.168.1.3:8080/BrainGames/webresources/getSettings";
+		String serverURL = "http://192.168.1.5:8080/BrainGames/webresources/getSettings";
 		       
 		// Use AsyncTask execute Method To Prevent ANR Problem
 		      new LongOperation().execute(serverURL);

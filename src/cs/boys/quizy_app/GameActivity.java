@@ -29,6 +29,11 @@ public class GameActivity extends Activity implements  OnClickListener{//, Servi
 	Button ansC ;
 	Button ansD ;
 	
+	Button submit;
+	Button pass;
+	
+	int currentQuestion;
+	
 	Integer question_id[]=new Integer[10];
 	String questions[]=new String[10];
 	String ans1[]=new String[10];
@@ -58,16 +63,23 @@ public class GameActivity extends Activity implements  OnClickListener{//, Servi
 		 ansB = (Button) findViewById(R.id.buttonB);
 		 ansC = (Button) findViewById(R.id.buttonC);
 		 ansD = (Button) findViewById(R.id.buttonD);
+		 
+		 submit = (Button) findViewById(R.id.submitButton);
+		 pass = (Button) findViewById(R.id.passButton);
+		 
 		
 		//START LISTENER
 		ansA.setOnClickListener(this);
 		ansB.setOnClickListener(this);
 		ansC.setOnClickListener(this);
 		ansD.setOnClickListener(this);
+		submit.setOnClickListener(this);
+		pass.setOnClickListener(this);
 		
 		load_questions();//first question
 		
-		show_question(0);
+		currentQuestion=0;
+		show_question(currentQuestion);
 		
 	}
 
@@ -130,6 +142,18 @@ public class GameActivity extends Activity implements  OnClickListener{//, Servi
 				ansC.setBackgroundDrawable(getResources().getDrawable(R.drawable.buttonshape));
 				ansA.setBackgroundDrawable(getResources().getDrawable(R.drawable.buttonshape));			
 				break;
+			
+			case R.id.passButton:
+				currentQuestion++;
+				if(currentQuestion>=10) currentQuestion=0;
+				show_question(currentQuestion);
+				break;
+			
+			case R.id.submitButton:
+				currentQuestion++;
+				if(currentQuestion>=10) currentQuestion=0;
+				show_question(currentQuestion);
+				break;
 		}
 	}
     
@@ -188,7 +212,8 @@ public class GameActivity extends Activity implements  OnClickListener{//, Servi
 		 ansB = (Button) findViewById(R.id.buttonB);
 		 ansC = (Button) findViewById(R.id.buttonC);
 		 ansD = (Button) findViewById(R.id.buttonD);
-		 question.setText(questions[index]);
+		 Log.e("index re",index+" "+questions[index]);
+		 question.setText("Question "+currentQuestion+"\n"+questions[index]);
 		 ansA.setText(ans1[index]);
 		 ansB.setText(ans2[index]);
 		 ansC.setText(ans3[index]);
