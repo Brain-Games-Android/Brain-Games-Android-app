@@ -57,7 +57,7 @@ public class SettingsActivity extends Activity implements OnClickListener {
 		//("http://85.74.105.202:8080/BrainGames/webresources/post_sub_diff");
 		//("http://192.168.1.3:8080/BrainGames/webresources/post_sub_diff");
 		//("http://localhost:8989/BrainGames/webresources/post_sub_diff");
-		String serverURL = "http://192.168.1.3:8080/BrainGames/webresources/post_sub_diff";
+		String serverURL = "http://192.168.1.5:8080/BrainGames/webresources/post_sub_diff";
         
         // Use AsyncTask execute Method To Prevent ANR Problem
         new LongOperation().execute(serverURL);
@@ -148,8 +148,8 @@ public class SettingsActivity extends Activity implements OnClickListener {
 			cv.put("ln",ln.getText().toString()); //These Fields should be your String values of actual column names
 			cv.put("diff", spinner.getSelectedItemPosition());
 			cv.put("categ", spinner2.getSelectedItemPosition());
-			cv.put("categ_name", spinner2.getSelectedItem().toString());
-			cv.put("diff_name", spinner.getSelectedItem().toString());
+			cv.put("categ_name", spinner.getSelectedItem().toString());
+			cv.put("diff_name", spinner2.getSelectedItem().toString());
 			
 			if(checkmusic.isChecked()==true) cv.put("music",1);
 			else cv.put("music",0);
