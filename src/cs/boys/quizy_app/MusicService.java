@@ -9,6 +9,73 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.widget.Toast;
 
+
+public class MusicService extends Service   {
+	    private static final String TAG = null;
+	    MediaPlayer player;
+	    public IBinder onBind(Intent arg0) {
+
+	        return null;
+	    }
+	    @Override
+	    public void onCreate() {
+	        super.onCreate();
+	        player = MediaPlayer.create(this, R.raw.zelda);
+	        player.setLooping(true); // Set looping
+	        player.setVolume(100,100);
+
+	    }
+	    public int onStartCommand(Intent intent, int flags, int startId) {
+	        player.start();
+	        return 1;
+	    }
+
+	    public void onStart(Intent intent, int startId) {
+	        // TO DO
+	    }
+	    public IBinder onUnBind(Intent arg0) {
+	        // TO DO Auto-generated method
+	        return null;
+	    }
+
+	    public void onStop() {
+
+	    }
+	    public void onPause() {
+
+	    }
+	    @Override
+	    public void onDestroy() {
+	        player.stop();
+	        player.release();
+	    }
+
+	    @Override
+	    public void onLowMemory() {
+
+	    }
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 public class MusicService extends Service implements MediaPlayer.OnErrorListener,
 	
 	// Interface used by the visual representation of the player controls.
@@ -86,7 +153,7 @@ public boolean onError(MediaPlayer mp, int what, int extra) {
 
 public void create()
 {
-	mPlayer = MediaPlayer.create(this, R.raw.hozier);
+	mPlayer = MediaPlayer.create(this, R.raw.zelda);
 	mPlayer.setOnErrorListener(this);
 
 	mPlayer.setOnErrorListener(new OnErrorListener() {
@@ -142,6 +209,7 @@ public void pause() {
 	if(mPlayer != null && isPlaying())
 	{
 		mPlayer.pause();
+		
 	}
 }
 
@@ -185,183 +253,4 @@ public void onBufferingUpdate(MediaPlayer mp, int percent) {
 	
 }
 }
-	
-/***********************SECOND TRY****************************/	
-/*
-	private static final String LOGCAT = null;
-	MediaPlayer objPlayer;
-	int length;
-	boolean paused;
-
-	public void onCreate(){
-		super.onCreate();
-		Log.d(LOGCAT, "Service Started!");
-		objPlayer = MediaPlayer.create(this,R.raw.hozier);
-		paused=false;
-	}
-
-	public int onStartCommand(Intent intent, int flags, int startId){
-		//if(!paused) 
-		objPlayer.start();
-		//else if(paused) resumeMusic();
-		Log.d(LOGCAT, "Media Player started!");
-		if(objPlayer.isLooping() != true){
-			Log.d(LOGCAT, "Problem in Playing Audio");
-		}
-		paused=false;
-		return 1;
-	}
-
-	public void onStop(){
-	objPlayer.stop();
-	objPlayer.release();
-	//pauseMusic();
-	//paused=true;
-	}
-
-	public void onPause(){
-	objPlayer.stop();
-	//pauseMusic();
-	//paused=true;
-	objPlayer.release();
-	}
-	public void onDestroy(){
-	objPlayer.stop();
-	objPlayer.release();
-	//pauseMusic();
-	//paused=true;
-	}
-	
-	public void pauseMusic()
-	{
-		if(objPlayer.isPlaying())
-		{
-			objPlayer.pause();
-			length=objPlayer.getCurrentPosition();
-
-		}
-	}
-
-	public void resumeMusic()
-	{
-		if(objPlayer.isPlaying()==false)
-		{
-			objPlayer.seekTo(length);
-			objPlayer.start();
-		}
-	}
-	
-	@Override
-	public IBinder onBind(Intent objIndent) {
-	return null;
-	}
-	}
-	
 */
-
-/****************FIRST TRY****************************/
-	/* private final IBinder mBinder = new ServiceBinder();
-    MediaPlayer mPlayer;
-    private int length = 0;
-
-    public MusicService() { }
-
-    public class ServiceBinder extends Binder {
-     	 MusicService getService()
-    	 {
-    		return MusicService.this;
-    	 }
-    }
-
-    @Override
-    public IBinder onBind(Intent arg0){return mBinder;}
-
-    @Override
-    public void onCreate (){
-	  super.onCreate();
-
-       mPlayer = MediaPlayer.create(this, R.raw.hozier);
-       mPlayer.setOnErrorListener(this);
-
-       if(mPlayer!= null)
-        {
-        	mPlayer.setLooping(true);
-        	mPlayer.setVolume(100,100);
-        }
-
-
-        mPlayer.setOnErrorListener(new OnErrorListener() {
-
-	  public boolean onError(MediaPlayer mp, int what, int
-          extra){
-
-			onError(mPlayer, what, extra);
-			return true;
-		}
-    	  });
-	}
-
-    @Override
-	public int onStartCommand (Intent intent, int flags, int startId)
-	{
-         mPlayer.start();
-         
-         return START_STICKY;
-	}
-
-	public void pauseMusic()
-	{
-		if(mPlayer.isPlaying())
-		{
-			mPlayer.pause();
-			length=mPlayer.getCurrentPosition();
-
-		}
-	}
-
-	public void resumeMusic()
-	{
-		if(mPlayer.isPlaying()==false)
-		{
-			mPlayer.seekTo(length);
-			mPlayer.start();
-		}
-	}
-
-	public void stopMusic()
-	{
-		mPlayer.stop();
-		mPlayer.release();
-		mPlayer = null;
-	}
-
-	@Override
-	public void onDestroy ()
-	{
-		super.onDestroy();
-		if(mPlayer != null)
-		{
-		try{
-		 mPlayer.stop();
-		 mPlayer.release();
-			}finally {
-				mPlayer = null;
-			}
-		}
-	}
-
-	public boolean onError(MediaPlayer mp, int what, int extra) {
-
-		Toast.makeText(this, "music player failed", Toast.LENGTH_SHORT).show();
-		if(mPlayer != null)
-		{
-			try{
-				mPlayer.stop();
-				mPlayer.release();
-			}finally {
-				mPlayer = null;
-			}
-		}
-		return false;
-	}
-}*/

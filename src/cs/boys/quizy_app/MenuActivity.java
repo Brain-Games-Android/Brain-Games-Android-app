@@ -4,6 +4,8 @@ package cs.boys.quizy_app;
 import cs.boys.quizy_app.MusicService;
 
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningServiceInfo;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +13,7 @@ import android.content.ServiceConnection;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,13 +22,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-public class MenuActivity extends Activity implements ServiceConnection {
+public class MenuActivity extends Activity {//implements ServiceConnection {
 
 	// indicates whether the activity is linked to service player.
 		private boolean mIsBound = false;
 		
 		// Saves the binding instance with the service.
 		private MusicService mServ;
+		boolean isSound=true;
+		boolean isIntent=false;
 	
 	
 	@Override
@@ -34,9 +39,7 @@ public class MenuActivity extends Activity implements ServiceConnection {
 		setContentView(R.layout.activity_menu);
 		
 		//music related
-		Intent music = new Intent(this, MusicService.class);
-		startService(music);
-		doBindService();
+
 		
 		//for the font
 		Typeface tf = Typeface.createFromAsset(getAssets(),"earth aircraft universe.ttf");
@@ -49,13 +52,11 @@ public class MenuActivity extends Activity implements ServiceConnection {
 		tvStart.setOnClickListener(new View.OnClickListener () {
         	public void onClick (View v)
         	{
-        		Toast toast = Toast.makeText(getApplicationContext(), "Start clicked", Toast.LENGTH_LONG);
-        		toast.setGravity(Gravity.CENTER, 0, 0);
-        		toast.show();
         		Intent Start;
         		//Bundle MyBundle;
         		//Start = new Intent (MenuActivity.this, GameActivity.class);
         		Start = new Intent (MenuActivity.this, LoadGameActivity.class);
+        		isIntent=true;
         		startActivity(Start);
         		//finish ();
         	}
@@ -70,11 +71,9 @@ public class MenuActivity extends Activity implements ServiceConnection {
 		tvSettings.setOnClickListener(new View.OnClickListener () {
         	public void onClick (View v)
         	{
-        		Toast toast = Toast.makeText(getApplicationContext(), "Settings clicked", Toast.LENGTH_LONG);
-        		toast.setGravity(Gravity.CENTER, 0, 0);
-        		toast.show();
         		Intent Start;
         		Start = new Intent (MenuActivity.this, SettingsActivity.class);
+        		isIntent=true;
         		startActivity(Start);
         	}
         });
@@ -87,11 +86,9 @@ public class MenuActivity extends Activity implements ServiceConnection {
 		tvAbout.setOnClickListener(new View.OnClickListener () {
         	public void onClick (View v)
         	{
-        		Toast toast = Toast.makeText(getApplicationContext(), "About clicked", Toast.LENGTH_LONG);
-        		toast.setGravity(Gravity.CENTER, 0, 0);
-        		toast.show();
         		Intent Start;
         		Start = new Intent (MenuActivity.this, AboutActivity.class);
+        		isIntent=true;
         		startActivity(Start);
         	}
         });
@@ -103,11 +100,7 @@ public class MenuActivity extends Activity implements ServiceConnection {
 		//EXIT LISTENER
 		tvExit.setOnClickListener(new View.OnClickListener () {
         	public void onClick (View v)
-        	{
-        		Toast toast = Toast.makeText(getApplicationContext(), "Exit clicked", Toast.LENGTH_LONG);
-        		toast.setGravity(Gravity.CENTER, 0, 0);
-        		toast.show();
-        		
+        	{        		
         		//THIS IS LIKE PRESSING HOME BUTTON
         		MenuActivity.this.finish();
         	    Intent intent = new Intent(Intent.ACTION_MAIN);
@@ -116,7 +109,7 @@ public class MenuActivity extends Activity implements ServiceConnection {
         	    startActivity(intent);
         	    
         	    //STOP MUSIC AS WELL
-        	    mServ.stop();
+        	    //mServ.stop();
         	}
         	
         });
@@ -145,108 +138,82 @@ public class MenuActivity extends Activity implements ServiceConnection {
 	@Override
 	protected void onStart ()
     {
+		Log.i("start","start it");
         super.onStart ();
-        Toast.makeText (this, "On Start", Toast.LENGTH_LONG).show ();
-        if (mServ!=null)mServ.start();
+        isIntent=false;
+        //doBindService();
+		Intent music = new Intent(this, MusicService.class);
+		startService(music);
+		//doBindService();
+        //if (mServ!=null) 
+//        if(mServ!=null){
+//        	//if(mServ.isPlaying()==false)
+//        		mServ.start();
+//        }
     }
 	
 	@Override
 	protected void onStop ()
     {
+		if(isIntent)Log.i("INTENT","true"); else  Log.i("INTENT","false");
         super.onStop ();
-        Toast.makeText (this, "On Start", Toast.LENGTH_LONG).show ();
-        mServ.pause();
+        if (isSound) {
+			if (!isIntent) {
+					Log.i("stop","stop it");
+					//mServ.pause();
+					Intent music = new Intent(this, MusicService.class);
+					stopService(music);
+					//doUnbindService();
+				isIntent = false;
+			}
+		}
+        
+		//doUnbindService();
     }
 	
 	@Override
 	protected void onDestroy ()
     {
         super.onDestroy ();
-        Toast.makeText (this, "On destroy", Toast.LENGTH_LONG).show ();
-        //mServ.stopMusic();
-        
-        //mServ.pause();
-        
-        //UNBIND THE SERVICE
-        doUnbindService();
-        
-       // Intent objIntent = new Intent(this, MusicService.class);
-        //MusicService.pauseMusic();
-	//	stopService(objIntent);
-
+        //doUnbindService();
     }
 	
-	//WHEN SERVICE IS CONNECTED WE START THE MUSIC
-	public void onServiceConnected(ComponentName name, IBinder binder)
-	{
-		mServ = ((MusicService.ServiceBinder) binder).getService();
-		//START MUSIC
-		mServ.start();
-	}
-	
-	public void onServiceDisconnected(ComponentName name)
-	{
-		mServ = null;
-	}
-	
-	// local methods used in connection/disconnection activity with service.
-	
-	public void doBindService()
-	{
-		// activity connects to the service.
- 		Intent intent = new Intent(this, MusicService.class);
-		bindService(intent, this, Context.BIND_AUTO_CREATE);
-		mIsBound = true;
-	}
-	
-	public void doUnbindService()
-	{
-		// disconnects the service activity.
-		if(mIsBound)
-		{
-			unbindService(this);
-      		mIsBound = false;
-		}
-	}
+//	//WHEN SERVICE IS CONNECTED WE START THE MUSIC
+//	public void onServiceConnected(ComponentName name, IBinder binder)
+//	{
+//		mServ = ((MusicService.ServiceBinder) binder).getService();
+//		//START MUSIC
+//		if(mServ.isPlaying()==false)
+//			mServ.start();
+//	}
+//	
+//	public void onServiceDisconnected(ComponentName name)
+//	{
+//		mServ=null;
+//	}
+//	
+//	// local methods used in connection/disconnection activity with service.
+//	
+//	public void doBindService()
+//	{
+//		// activity connects to the service.
+// 		Intent intent = new Intent(this, MusicService.class);
+//		bindService(intent, this, Context.BIND_AUTO_CREATE);
+//		mIsBound = true;
+//	}
+//	
+//	public void doUnbindService()
+//	{
+//		// disconnects the service activity.
+//		if(mIsBound)
+//		{
+//			unbindService(this);
+//      		mIsBound = false;
+//		}
+//	}
 
 	
-//LET THEM BE
-	
-	/*public void playAudio(View view) {
-		Intent objIntent = new Intent(this, MusicService.class);
-		startService(objIntent);
-		}
 
-		public void stopAudio(View view) {
-		Intent objIntent = new Intent(this, MusicService.class);
-		stopService(objIntent);    
-		}*/
-	
-/*	private ServiceConnection Scon =new ServiceConnection(){ //not finalk
-
-		public void onServiceConnected(ComponentName name, IBinder binder) {
-			ServiceBinder Loc_binder = (ServiceBinder) binder;
-            mServ = Loc_binder.getService();
-		}
-
-		public void onServiceDisconnected(ComponentName name) {
-			mServ = null;
-		}
-	};
-
-	void doBindService(){
-		bindService(new Intent(this,MusicService.class),Scon,Context.BIND_AUTO_CREATE);
-		mIsBound = true;
-	}
-
-	void doUnbindService()
-	{
-		if(mIsBound)
-		{
-			unbindService(Scon);
-      		mIsBound = false;
-		}
-	}*/
 }
 	
 

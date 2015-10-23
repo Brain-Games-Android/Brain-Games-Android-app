@@ -1,0 +1,274 @@
+<ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent"  xmlns:android="http://schemas.android.com/apk/res/android">
+
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="0dp"
+    android:background="@drawable/quiz"
+    android:orientation="vertical" >
+
+    <TableLayout
+        android:id="@+id/tableLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/textshape"
+        android:paddingBottom="8sp"
+        android:shrinkColumns="*"
+        android:stretchColumns="*" >
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/QUIZ"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_span="2"
+                android:gravity="center"
+                android:text="QUIZ ENDED"
+                android:textAlignment="center"
+                android:textColor="#008000"
+                android:textSize="25sp" />
+        </TableRow>
+
+        <TableRow android:paddingTop="25sp" >
+
+            <TextView
+                android:id="@+id/score_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#008000"
+                android:text="Score: " />
+
+            <TextView
+                android:id="@+id/score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#008000"
+                android:text="Your score" />
+        </TableRow>
+
+        <TableRow android:paddingTop="12sp" >
+
+            <TextView
+                android:id="@+id/q1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:maxLines="1"
+                android:scrollHorizontally="true"
+                android:textColor="#FF0000"
+                android:singleLine="true"
+                android:text="Question1" />
+
+            <TextView
+                android:id="@+id/a1"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content" />
+        </TableRow>
+
+        <TableRow android:paddingTop="12sp" >
+
+            <TextView
+                android:id="@+id/q2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:maxLines="1"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:textColor="#FF0000"
+                android:text="Question2" />
+
+            <TextView
+                android:id="@+id/a2"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content" />
+        </TableRow>
+
+        <TableRow android:paddingTop="12sp" >
+
+            <TextView
+                android:id="@+id/q3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:maxLines="1"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:textColor="#FF0000"
+                android:text="Question3" />
+
+            <TextView
+                android:id="@+id/a3"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content" />
+        </TableRow>
+
+        <TableRow android:paddingTop="12sp" >
+
+            <TextView
+                android:id="@+id/q4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FF0000"
+                android:lines="1"
+                android:maxLines="1"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:text="Question4" />
+
+            <TextView
+                android:id="@+id/a4"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content" />
+        </TableRow>
+
+        <TableRow android:paddingTop="12sp" >
+
+            <TextView
+                android:id="@+id/q5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FF0000"
+                android:lines="1"
+                android:maxLines="1"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:text="Question5" />
+
+            <TextView
+                android:id="@+id/a5"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content" />
+        </TableRow>
+
+        <TableRow android:paddingTop="12sp" >
+
+            <TextView
+                android:id="@+id/q6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:maxLines="1"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:textColor="#FF0000"
+                android:text="Question6" />
+
+            <TextView
+                android:id="@+id/a6"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content" />
+        </TableRow>
+
+        <TableRow android:paddingTop="12sp" >
+
+            <TextView
+                android:id="@+id/q7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:textColor="#FF0000"
+                android:maxLines="1"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:text="Question7" />
+
+            <TextView
+                android:id="@+id/a7"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content" />
+        </TableRow>
+
+        <TableRow android:paddingTop="12sp" >
+
+            <TextView
+                android:id="@+id/q8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FF0000"
+                android:lines="1"
+                android:maxLines="1"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:text="Question8" />
+
+            <TextView
+                android:id="@+id/a8"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content" />
+        </TableRow>
+
+        <TableRow android:paddingTop="12sp" >
+
+            <TextView
+                android:id="@+id/q9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FF0000"
+                android:lines="1"
+                android:maxLines="1"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:text="Question9" />
+
+            <TextView
+                android:id="@+id/a9"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content" />
+        </TableRow>
+
+        <TableRow android:paddingTop="12sp" >
+
+            <TextView
+                android:id="@+id/q10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:maxLines="1"
+                android:scrollHorizontally="true"
+                android:textColor="#FF0000"
+                android:singleLine="true"
+                android:text="Question10" />
+
+            <TextView
+                android:id="@+id/a10"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content" />
+        </TableRow>
+        
+        
+        <TableRow android:paddingTop="12sp" >
+
+            <Button
+                android:id="@+id/backMenu"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/buttonshape"
+                android:gravity="center"
+                android:text="Menu"
+                android:minHeight="60sp"
+                android:textSize="13sp" />
+
+            <Button
+                android:id="@+id/PlayAgain"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/buttonshape"
+                android:gravity="center"
+                android:text="Play Again"
+                android:minHeight="60sp"
+                android:textSize="13sp" />
+        </TableRow>
+        
+    </TableLayout>
+
+</RelativeLayout>
+
+</ScrollView>

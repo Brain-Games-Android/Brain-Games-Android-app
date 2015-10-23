@@ -17,10 +17,17 @@ import android.widget.Toast;
 // DEN 8A NAI ETSI TO ABOUT APLA TO XW GIA DEBBUGING Xd
 
 
+
 // HEHE HIHI HOHO GOGO! 
-public class AboutActivity extends Activity implements Button.OnClickListener,ServiceConnection {
+public class AboutActivity extends Activity implements Button.OnClickListener{//,ServiceConnection {
+	// indicates whether the activity is linked to service player.
 	// indicates whether the activity is linked to service player.
 	private boolean mIsBound = false;
+	
+	// Saves the binding instance with the service.
+
+	boolean isSound=true;
+	boolean isIntent=false;
 	
 	// Saves the binding instance with the service.
 	private MusicService mServ;
@@ -36,6 +43,7 @@ public class AboutActivity extends Activity implements Button.OnClickListener,Se
 		Intent music = new Intent(this, MusicService.class);
 		startService(music);
 		
+		
 		doBindService();
 		
 		
@@ -50,7 +58,7 @@ public class AboutActivity extends Activity implements Button.OnClickListener,Se
 	// interface connection with the service activity
 	public void onServiceConnected(ComponentName name, IBinder binder)
 	{
-		mServ = ((MusicService.ServiceBinder) binder).getService();
+		//mServ = ((MusicService.ServiceBinder) binder).getService();
 		Toast toast = Toast.makeText(getApplicationContext(), "NOT NULL", Toast.LENGTH_LONG);
 		toast.setGravity(Gravity.CENTER, 0, 0);
 		toast.show();
@@ -70,7 +78,7 @@ public class AboutActivity extends Activity implements Button.OnClickListener,Se
 	{
 		// activity connects to the service.
  		Intent intent = new Intent(this, MusicService.class);
-		bindService(intent, this, Context.BIND_AUTO_CREATE);
+		//bindService(intent, this, Context.BIND_AUTO_CREATE);
 		mIsBound = true;
 	}
 	
@@ -79,7 +87,7 @@ public class AboutActivity extends Activity implements Button.OnClickListener,Se
 		// disconnects the service activity.
 		if(mIsBound)
 		{
-			unbindService(this);
+			//unbindService(this);
       		mIsBound = false;
 		}
 	}
@@ -89,7 +97,6 @@ public class AboutActivity extends Activity implements Button.OnClickListener,Se
 	{
 		super.onDestroy();
 		
-		doUnbindService();
 	}
 	// interface buttons that call methods of service control on the activity.
 	@Override
@@ -98,15 +105,15 @@ public class AboutActivity extends Activity implements Button.OnClickListener,Se
 		{
 			case R.id.btn_play:
 				
-				mServ.start();
+				//mServ.start();
 				break;
 				
 			case R.id.btn_pause:
-				mServ.pause();
+				//mServ.pause();
 				break;
 				
 			case R.id.btn_stop:
-				mServ.stop();
+				//mServ.stop();
 				break;
 		}
 	}
@@ -117,4 +124,42 @@ public class AboutActivity extends Activity implements Button.OnClickListener,Se
 		getMenuInflater().inflate(R.menu.about, menu);
 		return true;
 	}
+	
+	@Override
+	protected void onStart ()
+    {
+        super.onStart ();
+//        if (isSound) {
+//			Intent SoundServ = new Intent(this, MusicService.class);
+//			startService(SoundServ);
+//			mServ.resume();
+//		}
+        //if (mServ!=null)mServ.start();
+    }
+	
+	@Override
+	protected void onStop ()
+    {
+        super.onStop ();
+        if (isSound) {
+			if (!isIntent) {
+					//mServ.pause();
+				isIntent = false;
+			}
+		}
+        //mServ.pause();
+    }
+	
+    @Override  
+    public void onBackPressed() {
+        super.onBackPressed();   
+        // Do extra stuff here
+        if (isSound) {
+			if (!isIntent) {
+				if(mServ!=null)
+					//mServ.pause();
+				isIntent = false;
+			}
+		}
+    }
 }
