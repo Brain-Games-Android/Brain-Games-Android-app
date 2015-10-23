@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:text="user"
         android:textSize="22sp"
-        android:textColor="#FFE87C" />
+        android:textColor="#000000" />
     
     </TableRow>
     
@@ -61,7 +61,7 @@
         android:layout_height="wrap_content"
         android:text="fn"
         android:textSize="22sp"
-        android:textColor="#FFE87C" />
+        android:textColor="#000000" />
     
     </TableRow>
     
@@ -85,7 +85,7 @@
         android:layout_height="wrap_content"
         android:text="ln"
         android:textSize="22sp"
-        android:textColor="#FFE87C" />
+        android:textColor="#000000" />
     
     </TableRow>
         
@@ -159,6 +159,7 @@
             android:layout_margin="4dp"
             android:background="@drawable/settings_shape"
             android:text="Cancel"
+            android:minHeight="60sp"
             android:textColor="#FFE87C" />
 
         <Button
@@ -168,6 +169,7 @@
             android:layout_margin="4dp"
             android:background="@drawable/settings_shape"
             android:text="OK"
+            android:minHeight="60sp"
             android:textColor="#FFE87C" />
         </TableRow>
     </TableLayout>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/quiz">
+ 	
+    <TextView
+        android:id="@+id/question"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/buttonA"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/buttonA"
+        android:paddingBottom="5dp"
+        android:background="@drawable/textshape"
+        android:text="20sp"
+        android:maxLines = "4"
+        android:scrollbars = "vertical"
+        android:textSize="20sp"
+        />
+    
+    <Button
+        android:id="@+id/buttonA"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="160dp"
+        android:background="@drawable/buttonshape" />
+    
+    <Button
+        android:id="@+id/buttonB"
+        android:layout_width="300dp"
+    	android:layout_height="50dp"
+        android:layout_below="@+id/buttonA"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/buttonshape"/>
+ 
+    <Button
+        android:id="@+id/buttonC"
+        android:layout_width="300dp"
+    	android:layout_height="50dp"
+        android:layout_below="@+id/buttonB"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/buttonshape"/>
+ 
+    <Button
+        android:id="@+id/buttonD"
+        android:layout_width="300dp"
+    	android:layout_height="50dp"
+        android:layout_below="@+id/buttonC"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/buttonshape"/>
+	
+    <Button
+        android:id="@+id/passButton"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/buttonD"
+        android:layout_alignLeft="@+id/buttonD"
+        android:layout_alignParentBottom="true"
+        android:text="@string/pass"
+        android:background="@drawable/buttonshape2" />
+    
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/buttonD"
+        android:layout_alignBaseline="@+id/passButton"
+        android:layout_alignBottom="@+id/passButton"
+        android:layout_alignRight="@+id/buttonD"
+        android:text="@string/submit"
+        android:background="@drawable/buttonshape3" />
+    
+</RelativeLayout>
+
+<!-- 
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+
+</RelativeLayout>
+ -->

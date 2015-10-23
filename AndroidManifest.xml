@@ -9,19 +9,24 @@
         android:targetSdkVersion="20" />
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@android:style/Theme.NoTitleBar" 
+         >
         <service
             android:name=".MusicService"
             android:enabled="true" />
 
         <activity
             android:name=".MenuActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:configChanges="orientation"
+   			android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,19 +35,38 @@
         </activity>
         <activity
             android:name=".GameActivity"
-            android:label="@string/title_activity_game" >
+            android:label="@string/title_activity_game" 
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:configChanges="orientation"
+   			android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings" >
+            android:label="@string/title_activity_settings"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+            android:configChanges="orientation"
+   			android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".AboutActivity"
-            android:label="@string/title_activity_about" >
+            android:label="@string/title_activity_about"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+            android:configChanges="orientation"
+   			android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".LoadGameActivity"
-            android:label="@string/title_activity_load_game" >
+            android:label="@string/title_activity_load_game"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+            android:configChanges="orientation"
+   			android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".ResultsActivity"
+            android:label="@string/title_activity_results"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+            android:configChanges="orientation"
+   			android:screenOrientation="portrait">
         </activity>
     </application>
 

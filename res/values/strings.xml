@@ -19,5 +19,8 @@
     <string name="categ_set">Category</string>
     <string name="title_activity_about">AboutActivity</string>
     <string name="title_activity_load_game">LoadGameActivity</string>
-
+    <string name="title_activity_results">ResultsActivity</string>
+	
+    <string name="submit">Submit</string>
+    <string name="pass">Pass</string>
 </resources>

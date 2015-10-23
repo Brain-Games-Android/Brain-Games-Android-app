@@ -1,6 +1,6 @@
 package cs.boys.quizy_app;
 
-
+import cs.boys.quizy_app.MusicService;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -21,11 +21,18 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,30 +42,52 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.TextView;
 import android.widget.CheckBox;
 
-public class SettingsActivity extends Activity implements OnClickListener {
 
+public class SettingsActivity extends Activity implements OnClickListener{//, ServiceConnection {
+
+	
+	// indicates whether the activity is linked to service player.
+	private boolean mIsBound = false;
+	
+	// Saves the binding instance with the service.
+	private MusicService mServ;
+	boolean isSound=true;
+	boolean isIntent=false;
+	
+	
 	private Spinner spinner;
     //private static /*final*/ String[]paths;// = {"Easy", "Medium", "Hard", "YOLO"};
     private Spinner spinner2;
     //private static /*final*/ String[]paths2;// = {"football", "cs", "kati", "oxi"};
     Button ok,cancel;
 
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager 
+              = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null;
+    }
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
 		
+//		Intent music = new Intent(this, MusicService.class);
+//		startService(music);
+		//doBindService();
 		
 		//("http://85.74.105.202:8080/BrainGames/webresources/post_sub_diff");
 		//("http://192.168.1.3:8080/BrainGames/webresources/post_sub_diff");
 		//("http://localhost:8989/BrainGames/webresources/post_sub_diff");
-		String serverURL = "http://192.168.1.5:8080/BrainGames/webresources/post_sub_diff";
-        
+		String serverURL = "http://85.74.125.123:8080/BrainGames/webresources/post_sub_diff";
+		//String serverURL = "http://192.168.1.4:8989/BrainGames/webresources/post_sub_diff";
+		
         // Use AsyncTask execute Method To Prevent ANR Problem
         new LongOperation().execute(serverURL);
 
@@ -177,12 +206,14 @@ public class SettingsActivity extends Activity implements OnClickListener {
 			case R.id.btnok:
 				
 				updateSettings();
+				//isIntent = true;
 				SettingsActivity.this.onBackPressed();
 				break;
 				
 			case R.id.btncancel:
 				//SQLiteDatabase db=openOrCreateDatabase("SettingsDB", Context.MODE_PRIVATE, null);
 				//db.execSQL("DROP TABLE IF EXISTS 'settings'"); 
+				//isIntent = true;
 				SettingsActivity.this.onBackPressed();
 				break;
 		}
@@ -236,7 +267,7 @@ public class SettingsActivity extends Activity implements OnClickListener {
                   // Send POST data request
         
                   URLConnection conn = url.openConnection(); 
-
+                  conn.setConnectTimeout(10000);
                
                   // Get the server response 
                     
@@ -250,6 +281,7 @@ public class SettingsActivity extends Activity implements OnClickListener {
                                // Append server response in string
                                sb.append(line + " ");
                         }
+                    sb.setLength(sb.length() - 1);
                      
                     // Append Server Response To Content String 
                    Content = sb.toString();
@@ -280,8 +312,24 @@ public class SettingsActivity extends Activity implements OnClickListener {
             Dialog.dismiss();
               
             if (Error != null) {
-                  
-                uiUpdate.setText("Output : "+Error);
+            	
+            	boolean netstat = isNetworkAvailable();
+            	Toast toast;
+            	if(!netstat)
+                {
+                 // emfanisei katallhlou toast mhnymatos
+            		toast = Toast.makeText(getApplicationContext(), "No internet connection!", Toast.LENGTH_LONG);
+                }
+            	else {
+            		toast = Toast.makeText(getApplicationContext(), "Unable to connect to the server.", Toast.LENGTH_LONG);
+            	}
+            	toast.setGravity(Gravity.CENTER, 0, 0);
+        		toast.show();
+        		
+            	Intent Start = new Intent (SettingsActivity.this, MenuActivity.class);
+            	isIntent = true;
+        		startActivity(Start);
+        		finish();
                   
             } else {
                
@@ -337,9 +385,80 @@ public class SettingsActivity extends Activity implements OnClickListener {
     }
 	
 
-
-
+	@Override
+	protected void onStart ()
+    {
+        super.onStart ();
+        //doBindService();
+//        if (isSound) {
+			Intent SoundServ = new Intent(this, MusicService.class);
+			startService(SoundServ);
+//			mServ.resume();
+//		}
+        //if (mServ!=null)mServ.start();
+    }
+	
+	@Override
+	protected void onStop ()
+    {
 		
+        super.onStop ();
+        if (isSound) {
+			if (!isIntent) {
+				Log.i("stop","stop it");
+				//if(mServ!=null)
+					//mServ.pause();
+					//doBindService();
+					Intent music = new Intent(this, MusicService.class);
+					stopService(music);
+				isIntent = false;
+			}
+		}
+        
+        //doUnbindService();
+
+        //mServ.pause();
+    }
+	
+    @Override  
+    public void onBackPressed() {
+        super.onBackPressed();   
+        
+        isIntent = true; //KSEROUME OTI TO MENU DEN EXEI GINEI FINISH!!!
+    }
+
+	//WHEN SERVICE IS CONNECTED WE START THE MUSIC
+//		public void onServiceConnected(ComponentName name, IBinder binder)
+//		{
+//			mServ = ((MusicService.ServiceBinder) binder).getService();
+//			//START MUSIC
+//			mServ.start();
+//		}
+//		
+//		public void onServiceDisconnected(ComponentName name)
+//		{
+//			mServ = null;
+//		}
+//		
+//		// local methods used in connection/disconnection activity with service.
+//		
+//		public void doBindService()
+//		{
+//			// activity connects to the service.
+//	 		Intent intent = new Intent(this, MusicService.class);
+//			bindService(intent, this, Context.BIND_AUTO_CREATE);
+//			mIsBound = true;
+//		}
+//		
+//		public void doUnbindService()
+//		{
+//			// disconnects the service activity.
+//			if(mIsBound)
+//			{
+//				unbindService(this);
+//	      		mIsBound = false;
+//			}
+//		}	
 }
 
 
